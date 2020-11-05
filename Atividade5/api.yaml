@@ -1,0 +1,131 @@
+swagger: "2.0"
+info:
+  description: "Sistema desenvolvido durante a disciplica de TecWeb"
+  version: "1.0.0"
+  title: "Conheça seu Voto"
+  contact:
+    email: "julianadft@gmail.com"
+host: "www.conhecaseuvoto.com.br"
+basePath: "/v1"
+tags:
+- name: "candidato"
+  description: "Tudo sobre os candidatos"
+- name : "lista"
+  description: "Lista de todos os candidatos"
+- name: "usuario"
+  description: "Operacoes para gerência de usuários"
+schemes: 
+- "http"
+paths:  
+  /candidato:
+    post:
+      tags:
+      - "candidato"
+      summary: "Adiciona um novo candidato"
+      operationId: "addCandidato"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Obj a ser adicionado na lista"
+        required: true
+        schema:
+          $ref: "#/definitions/Candidato"  
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: "#/definitions/Candidato"
+  /candidato/{candidatoId}:
+    get:
+      tags:
+      - "candidato"
+      summary: "Busca candidato pelo ID"
+      operationId: "getCandById"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "candidatoId"
+        in: "path"
+        description: "ID do candidato"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        200:
+          description: "sucessful operarion"
+          schema:
+            $ref: "#/definitions/Candidato"
+        400:
+          description: "invalid ID supplied"
+        404: 
+          description: "candidato não encontrado"
+    put:
+      tags:
+      - "candidato"
+      summary: "atualizar um candidato na lista"
+      consumes:
+      - "aplicantion/json"
+      produces:
+      - "aplication/json"
+      parameters:
+      - name: "candidatoId"
+        in: "path"
+        description: "ID necessario para atualizar"
+        required: true
+        type: "integer"
+        format: "int64"
+      - name: "body"
+        in: "body"
+        description: "obj a ser atualizado"
+        schema:
+          $ref: "#/definitions/Candidato"
+      responses:
+        200:
+          description: "sucessful operarion"
+          schema:
+            $ref: "#/definitions/Candidato"
+        400:
+          description: "invalid ID supplied"
+        404: 
+          description: "candidato não encontrado"
+    delete:      
+      tags:
+      - "candidato"
+      summary: "Apaga um candidato"
+      operationId: "deleteCand"
+      produces: 
+      - "application/json"
+      parameters: 
+      - name: "candidatoId"
+        in: "path"
+        description: "ID do candidato a ser apagado"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        200:
+          description: "sucessful operarion"
+          schema:
+            $ref: "#/definitions/Candidato"
+        400:
+          description: "invalid ID supplied"
+        404: 
+          description: "candidato não encontrado"   
+definitions:
+  Candidato:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      nome:
+        type: "string"
+      partido:
+        type: "string"
+      numero:
+        type: "integer"
+        format: "int64"
