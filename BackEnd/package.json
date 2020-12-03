@@ -1,0 +1,29 @@
+{
+  "name": "back-end-ambiente-e-estrutura-arauju",
+  "version": "1.0.0",
+  "description": "tecweb app",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ufsj-dcomp/back-end-ambiente-e-estrutura-arauju.git"
+  },
+  "keywords": [
+    "app",
+    "web"
+  ],
+  "author": "juliana",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ufsj-dcomp/back-end-ambiente-e-estrutura-arauju/issues"
+  },
+  "homepage": "https://github.com/ufsj-dcomp/back-end-ambiente-e-estrutura-arauju#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "mysql": "^2.18.1"
+  }
+}
