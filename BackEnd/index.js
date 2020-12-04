@@ -22,7 +22,7 @@ app.post('/auth', (req, resp) => {
   connection.query("SELECT * FROM usuario WHERE nome = ? and senha = ?", [user.nome, user.senha], (err, result) => {
     var usuario = result[0];
     if(result.lenght == 0){
-      //resp.status(401);
+      resp.status(401);
       resp.send({token: null, usuario: usuario, success: false});
     } else {
       let token = jwt.sign({id: usuario.nome}, 'tecweb', {expiresIn: 6000});
@@ -36,11 +36,9 @@ verifica_token = (req, resp, next) => {
   var token = req.headers['x-acess-token'];
 
   if(!token) {
-    return resp.status(401).end();
+    resp.status(401);
   }
   jwt.verify(token, 'tecweb', (err, docoded) => {
-    if(err)
-      return resp.status(401).end();
 
     req.usuario = decoded.id;
     next();
