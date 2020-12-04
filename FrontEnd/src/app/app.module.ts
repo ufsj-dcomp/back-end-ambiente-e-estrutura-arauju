@@ -7,21 +7,25 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
 import { CandidatoComponent, MngCandidatoDialog } from './candidato/candidato.component';
-import { ListaComponent } from './lista/lista.component';
-import { UsuarioComponent } from './usuario/usuario.component';
 import { HttpClientModule } from '@angular/common/http';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
+import { ConhecaComponent } from './conheca/conheca.component';
+import { AuthComponent } from './auth/auth.component';
+import { HomeComponent } from './home/home.component';
+import { Globals } from './globals/globals';
+import { AuthGuard } from './auth/auth.guard';
 
 @NgModule({
   declarations: [
     AppComponent,
     CandidatoComponent,
-    ListaComponent,
-    UsuarioComponent,
-    MngCandidatoDialog
+    MngCandidatoDialog,
+    ConhecaComponent,
+    AuthComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
@@ -39,7 +43,7 @@ import { FormsModule } from '@angular/forms';
   entryComponents:[
     MngCandidatoDialog
   ],
-  providers: [],
+  providers: [AuthGuard, Globals],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -3,6 +3,7 @@ var cors = require('cors');
 var app = express();
 var mysql = require("mysql");
 const bodyParser = require('body-parser');
+var jwt = require ('jsonwebtoken');
 
 var connection = mysql.createConnection({
   host: "localhost",
@@ -16,7 +17,37 @@ app.use(express.json());
 app.use(bodyParser.json());
 app.use(cors());
 
-app.get("/candidato", (req, resp) => {
+app.post('/auth', (req, resp) => {
+  var user = req.body;
+  connection.query("SELECT * FROM usuario WHERE nome = ? and senha = ?", [user.nome, user.senha], (err, result) => {
+    var usuario = result[0];
+    if(result.lenght == 0){
+      //resp.status(401);
+      resp.send({token: null, usuario: usuario, success: false});
+    } else {
+      let token = jwt.sign({id: usuario.nome}, 'tecweb', {expiresIn: 6000});
+      resp.status(200);
+      resp.send({token: token, usuario: usuario, success: true});
+    }
+  });
+});
+
+verifica_token = (req, resp, next) => {
+  var token = req.headers['x-acess-token'];
+
+  if(!token) {
+    return resp.status(401).end();
+  }
+  jwt.verify(token, 'tecweb', (err, docoded) => {
+    if(err)
+      return resp.status(401).end();
+
+    req.usuario = decoded.id;
+    next();
+  });
+}
+
+app.get("/candidato", verifica_token, (req, resp) => {
     var candidatoId = req.params.candidatoId;
     console.log("GET - Candidato ");
 
@@ -28,7 +59,7 @@ app.get("/candidato", (req, resp) => {
   });
 });
 
-app.post('/candidato', function(req, resp){
+app.post('/candidato', verifica_token, function(req, resp){
     var candidato = req.body;
     console.log("POST - Candidato");
     connection.query("INSERT INTO candidato SET ?", [candidato], (err, result) => {
@@ -41,7 +72,7 @@ app.post('/candidato', function(req, resp){
     //res.render("/candidato");
 });
 
-app.get("/candidato/:candidatoId", (req, resp) => {
+app.get("/candidato/:candidatoId", verifica_token, (req, resp) => {
     var candidatoId = req.params.candidatoId;
     console.log("GET - CandidatoId " + candidatoId);
 
@@ -53,7 +84,7 @@ app.get("/candidato/:candidatoId", (req, resp) => {
   });
 });
 
-app.put('/candidato/:candidatoId', (req, resp) =>{
+app.put('/candidato/:candidatoId', verifica_token, (req, resp) =>{
     var candidato = req.body;
     var candidatoId = req.params.candidatoId;
     console.log("PUT - CandidatoId " + candidatoId);
@@ -66,7 +97,7 @@ app.put('/candidato/:candidatoId', (req, resp) =>{
   });
 });
 
-app.delete('/candidato/:candidatoId', (req, resp) =>{
+app.delete('/candidato/:candidatoId', verifica_token, (req, resp) =>{
     var candidatoId = req.params.candidatoId;
     console.log("DELETE - CandidatoId " + candidatoId);
 

@@ -1,0 +1,12 @@
+<mat-toolbar>
+    <mat-toolbar-row>
+        <span>Conheça Seu Candidato App</span>
+    <div><a mat-button [routerLink] ="'/candidato'">Candidato</a>
+        <a mat-button [routerLink] ="'/conheca'">Conheca</a>
+    </div>
+    </mat-toolbar-row>
+</mat-toolbar>
+
+<div class="container-fluid">
+  <router-outlet></router-outlet>
+</div>

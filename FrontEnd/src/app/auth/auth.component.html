@@ -1,0 +1,26 @@
+<div class="row justify-content-md-center mt-5">
+    <div class="col-8 align-self-center">
+        <div class="login-wrapper">
+            <form class="login">
+            <section class="title">
+                <h3 class="welcome">Bem-vindo ao Conheça seu Candidato</h3>
+                <p class="hint">Utilize seu nome de usuário para acessar o sistema</p>
+            </section>
+            <div class="login-group">
+                <mat-form-field style="width: 100%">
+                <mat-label>Nome do Usuário</mat-label>
+                <input matInput name="email" [(ngModel)]="nome">
+                </mat-form-field>
+                <mat-form-field style="width: 100%">
+                <mat-label>Senha</mat-label>
+                <input matInput name="senha" [(ngModel)]="senha">
+                </mat-form-field>
+                <div class="error active" *ngIf="authInvalido">
+                Nome de usuário ou senha inválidos
+                </div>
+                <button mat-raised-button (click)="auth()">Entrar</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
